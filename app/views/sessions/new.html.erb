@@ -1,2 +1,25 @@
-<h1>Sessions#new</h1>
-<p>Find me in app/views/sessions/new.html.erb</p>
+<h1>awake.la</h1>
+<div class="signin-form">
+  <% form_tag session_path do %>
+    <fieldset>
+      <legend>请登录</legend>
+      <table>
+        <tr>
+          <th><label for="login">用户名或邮箱地址:</label></th>
+          <td><%= text_field_tag :login %></td>
+        </tr>
+        <tr>
+          <th><label for="password">密码:</label></th>
+          <td><%= password_field_tag :password %></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+          <%= submit_tag "登录" %>
+          <%= link_to '注册新账号', new_user_path %>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  <% end %>
+</div>
