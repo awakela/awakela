@@ -1,0 +1,24 @@
+<h1>Listing wakeup_records</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Time</th>
+    <th>Message</th>
+  </tr>
+
+<% @wakeup_records.each do |wakeup_record| %>
+  <tr>
+    <td><%=h wakeup_record.user_id %></td>
+    <td><%=h wakeup_record.time %></td>
+    <td><%=h wakeup_record.message %></td>
+    <td><%= link_to 'Show', wakeup_record %></td>
+    <td><%= link_to 'Edit', edit_wakeup_record_path(wakeup_record) %></td>
+    <td><%= link_to 'Destroy', wakeup_record, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New wakeup_record', new_wakeup_record_path %>

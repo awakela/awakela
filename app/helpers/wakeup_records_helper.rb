@@ -1,0 +1,2 @@
+module WakeupRecordsHelper
+end
