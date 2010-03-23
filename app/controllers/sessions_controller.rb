@@ -3,9 +3,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @current_user = User.authenticate(params[:login], params[:password])
-    if @current_user
-      session[:user_id] = @current_user.id
+    if sign_in(User.authenticate(params[:login], params[:password]))
       redirect_to :root
     else
       flash.now[:notice] = "用户名或者密码不正确"

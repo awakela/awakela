@@ -26,6 +26,14 @@ protected
     session[:return_to] = request.request_uri
     redirect_to new_session_path and return false
   end
+  
+  def sign_in(user)
+	@current_user = user
+    if @current_user
+      session[:user_id] = @current_user.id
+	end
+	@current_user
+  end
 
   helper_method :logged_in?
 end

@@ -51,17 +51,11 @@ class WakeupRecordsController < ApplicationController
 		@wakeup_record.time.hour,
 		@wakeup_record.time.min)
 
-    #respond_to do |format|
-      if @wakeup_record.save
-        flash[:notice] = '起床愉快!'
-        #format.html { redirect_to(@wakeup_record) }
-        #format.xml  { render :xml => @wakeup_record, :status => :created, :location => @wakeup_record }
-      else
-        flash[:notice] = '出错'
-        #format.html { render :action => "new" }
-        #format.xml  { render :xml => @wakeup_record.errors, :status => :unprocessable_entity }
-      end
-    #end
+	if @wakeup_record.save
+		flash[:notice] = '起床愉快!'
+	else
+		flash[:notice] = '出错'
+	end
 	redirect_to :root
   end
 

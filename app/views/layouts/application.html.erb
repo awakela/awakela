@@ -11,6 +11,9 @@
     <div id="wrapper">
       <div id="header">
 		<h1>Awake.La</h1>
+		<% if flash[:notice] %>
+			<p style="color: green"><%= flash[:notice] %></p>
+		<% end -%>
 		<% if logged_in? %>
 			<div class="user-status">
 				你好，<%= @current_user.username %>。
@@ -20,9 +23,6 @@
 		<% end -%>
       </div>
       <div id="main">
-		<% if flash[:notice] %>
-			<p style="color: green"><%= flash[:notice] %></p>
-		<% end -%>
         <%= yield %>
       </div>
       <div id="footer">
