@@ -1,4 +1,6 @@
-﻿class WakeupRecordsController < ApplicationController
+class WakeupRecordsController < ApplicationController
+  before_filter :login_required
+
   # GET /wakeup_records
   # GET /wakeup_records.xml
   def index
