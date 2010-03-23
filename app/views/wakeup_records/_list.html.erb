@@ -1,0 +1,21 @@
+﻿<h2>大家的起床记录</h2>
+<table>
+  <tr>
+    <th>谁</th>
+    <th>时间</th>
+    <th>留言</th>
+  </tr>
+
+<% @wakeup_records.each do |wakeup_record| %>
+  <tr>
+    <td><%=h wakeup_record.user %></td>
+    <td><%=h wakeup_record.time %></td>
+    <td><%=h wakeup_record.message %></td>
+	<!--
+    <td><%= link_to 'Show', wakeup_record %></td>
+    <td><%= link_to 'Edit', edit_wakeup_record_path(wakeup_record) %></td>
+    <td><%= link_to 'Destroy', wakeup_record, :confirm => 'Are you sure?', :method => :delete %></td>
+	-->
+  </tr>
+<% end %>
+</table>

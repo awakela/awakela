@@ -7,7 +7,11 @@ class User < ActiveRecord::Base
     return user
   end
 
-  def recorded_today?
-    WakeupRecord.recorded_today?(self)
+  def todays_record
+    WakeupRecord.todays_record(self)
+  end
+  
+  def to_s
+    self.username
   end
 end

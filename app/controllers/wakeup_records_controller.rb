@@ -1,4 +1,4 @@
-class WakeupRecordsController < ApplicationController
+﻿class WakeupRecordsController < ApplicationController
   # GET /wakeup_records
   # GET /wakeup_records.xml
   def index
@@ -41,17 +41,26 @@ class WakeupRecordsController < ApplicationController
   # POST /wakeup_records.xml
   def create
     @wakeup_record = WakeupRecord.new(params[:wakeup_record])
+	@wakeup_record.user = @current_user
+	@wakeup_record.time = DateTime.civil(
+		DateTime.now.year,
+		DateTime.now.month,
+		DateTime.now.day,
+		@wakeup_record.time.hour,
+		@wakeup_record.time.min)
 
-    respond_to do |format|
+    #respond_to do |format|
       if @wakeup_record.save
-        flash[:notice] = 'WakeupRecord was successfully created.'
-        format.html { redirect_to(@wakeup_record) }
-        format.xml  { render :xml => @wakeup_record, :status => :created, :location => @wakeup_record }
+        flash[:notice] = '起床愉快!'
+        #format.html { redirect_to(@wakeup_record) }
+        #format.xml  { render :xml => @wakeup_record, :status => :created, :location => @wakeup_record }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @wakeup_record.errors, :status => :unprocessable_entity }
+        flash[:notice] = '出错'
+        #format.html { render :action => "new" }
+        #format.xml  { render :xml => @wakeup_record.errors, :status => :unprocessable_entity }
       end
-    end
+    #end
+	redirect_to :root
   end
 
   # PUT /wakeup_records/1

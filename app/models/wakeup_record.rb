@@ -1,13 +1,16 @@
 class WakeupRecord < ActiveRecord::Base
   belongs_to :user
 
-  def self.recorded_today?(user)
+  def self.todays_record(user)
     last = user.wakeup_records.last
-    !last.nil? and last.recorded_today?
+	if !last.nil? and last.recorded_today?
+		last
+	else
+		nil
+	end
   end
 
-private
   def recorded_today?
-    # TODO to be implemented
+    self.time > DateTime.civil(DateTime.now.year,DateTime.now.month,DateTime.now.day)
   end
 end
