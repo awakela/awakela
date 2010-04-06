@@ -45,10 +45,10 @@ url = Gchart.line(
 			:type => 'line',
 			:encoding => 'text',
             :data => data,
-			:axis_with_labels => "x,y",
+			:axis_with_labels => "x,y,y",
 			:axis_range => [[0,wakeup_records.size - 1],[0,100]], #chxr
-			:axis_labels => [label_x, label_y],
-			:new_markers => "o,0066FF,0,-.5,6"
+			:axis_labels => [label_x, label_y, '早|晚'],
+			:new_markers => "x,FF0000,0,-1,20.0"
 			);
 # see gchart.rb:622, in the googlecharts gem, the text encoding is hard-coded-combined with data range (chds)
 # however, we don't need this, so we hard-code ourself to override it back
