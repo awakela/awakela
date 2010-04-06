@@ -1,5 +1,5 @@
-
 class User < ActiveRecord::Base
+  acts_as_network :friends, :through => :invites, :conditions => ["is_accepted = ?", true]
   has_many :wakeup_records
 
   validates_presence_of :username, :email, :password
