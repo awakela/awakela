@@ -1,15 +1,19 @@
-﻿<h2>大家的起床记录</h2>
+﻿
 <table>
   <tr>
+	<% if not defined? show_user or show_user %>
     <th>谁</th>
+	<% end %>
     <th>时间</th>
     <th>留言</th>
     <th>时区</th>
   </tr>
 
-<% @wakeup_records.each do |wakeup_record|%>
+<% wakeup_records.each do |wakeup_record|%>
   <tr>
-    <td><%=h wakeup_record.user %></td>
+	<% if not defined? show_user or show_user %>
+    <td><%=link_to wakeup_record.user, user_path(wakeup_record.user.username) %></td>
+	<% end %>
     <td><%=h wakeup_record.time_local.strftime '%Y-%m-%d %H:%M:%S' %></td>
     <td><%=h wakeup_record.message %></td>
     <td><%=h wakeup_record.timezone %></td>

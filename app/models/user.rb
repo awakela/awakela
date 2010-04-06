@@ -11,8 +11,10 @@ class User < ActiveRecord::Base
     return user
   end
 
-  def todays_record
-    WakeupRecord.todays_record(self)
+  def todays_wakeup_record
+	return @todays_wakeup_record if @todays_wakeup_record_fetched
+	@todays_wakeup_record_fetched = true
+    @todays_wakeup_record = WakeupRecord.todays_record(self)
   end
   
   def to_s

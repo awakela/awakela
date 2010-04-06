@@ -8,10 +8,11 @@
 	<% end -%>
 <%- end -%>
 <% if logged_in? %>
-	<% if !current_user.todays_record.nil? %>
-		今天起床时间：<%= current_user.todays_record.time_local.strftime '%Y-%m-%d %H:%M:%S' %>
+	<% if not current_user.todays_wakeup_record.nil? %>
+		今天起床时间：<%= current_user.todays_wakeup_record.time_local.strftime '%Y-%m-%d %H:%M:%S' %>
 	<% else %>
 		<%= render :partial => "wakeup_records/wakeup_post_form", :locals => { :new_record => @my_wakeup_record } %>
 	<% end -%>
 <% end -%>
-<%= render :partial => "wakeup_records/list" %>
+<h2>大家的起床记录</h2>
+<%= render :partial => "wakeup_records/list", :locals => { :wakeup_records => @wakeup_records } %>

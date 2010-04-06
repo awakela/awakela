@@ -1,0 +1,61 @@
+<% if wakeup_records.size
+
+require 'gchart'
+
+if not defined? width
+	width = 480
+end
+if not defined? height
+	height = 240
+end
+
+
+data = []
+label_x = ""
+max = min = hours_in_day(wakeup_records[0].time_local)
+wakeup_records.each do |r|
+	min = [min, hours_in_day(r.time_local)].min
+	max = [max, hours_in_day(r.time_local)].max
+end
+
+label_y_min = [min-1, 0].max.to_int
+label_y_max = [max+1, 24].min.to_int
+
+
+
+wakeup_records.each do |r|
+	value = (hours_in_day(r.time_local) - label_y_min.to_f) / (label_y_max.to_f - label_y_min.to_f) * 100.0
+	value = value.to_int
+	data.push value
+	
+	label_x += "|" if not label_x.empty?
+	label_x += nicky_day r.time_local
+end
+
+
+label_y = ""
+label_y_min.upto(label_y_max) do |y|
+	label_y += "|" if not label_y.empty?
+	label_y += nicky_time_a(y)
+end
+
+
+url = Gchart.line(
+			:size => "#{width}x#{height}",
+			:type => 'line',
+			:encoding => 'text',
+            :data => data,
+			:axis_with_labels => "x,y",
+			:axis_range => [[0,wakeup_records.size - 1],[0,100]], #chxr
+			:axis_labels => [label_x, label_y],
+			:new_markers => "o,0066FF,0,-.5,6"
+			);
+# see gchart.rb:622, in the googlecharts gem, the text encoding is hard-coded-combined with data range (chds)
+# however, we don't need this, so we hard-code ourself to override it back
+# also see google's document: http://code.google.com/apis/chart/docs/gallery/line_charts.html
+# todo: add another chart control which leavage
+# http://code.google.com/intl/zh-CN/apis/visualization/documentation/reference.html#DataTable_addColumn
+url = url.gsub(/([\&\?])chds=[^\&]*\&?/i, '\1') 
+%>
+<img src="<%=h url%>" />
+<% end %>

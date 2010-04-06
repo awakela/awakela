@@ -1,18 +1,5 @@
-<p>
-  <b>Username:</b>
-  <%=h @user.username %>
-</p>
+<h2><%=h @user.username %>的起床记录</h2>
+<%= render :partial => "wakeup_records/list", :locals => { :wakeup_records => @wakeup_records, :show_user => false } %>
+<h2>图</h2>
+<%= render :partial => "wakeup_records/image_chart", :locals => { :wakeup_records => @wakeup_records } %>
 
-<p>
-  <b>Email:</b>
-  <%=h @user.email %>
-</p>
-
-<p>
-  <b>Password:</b>
-  <%=h @user.password %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

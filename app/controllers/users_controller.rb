@@ -1,24 +1,17 @@
 class UsersController < ApplicationController
 
-  # GET /users
-  # GET /users.xml
-  def index
-    @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @users }
-    end
-  end
-
   # GET /users/1
-  # GET /users/1.xml
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by_username(params[:id])
+	@wakeup_records = WakeupRecord.find(
+		:all,
+		:conditions => ["user_id = ?", @user.id],
+		:order => "id desc",
+		:limit => 10
+	).reverse
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @user }
     end
   end
 
