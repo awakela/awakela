@@ -26,7 +26,7 @@ class WakeupRecordsController < ApplicationController
   # GET /wakeup_records/new
   # GET /wakeup_records/new.xml
   def new
-    @wakeup_record = WakeupRecord.new
+    @wakeup_record = WakeupRecord.create current_timezone
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,10 +44,17 @@ class WakeupRecordsController < ApplicationController
   def create
     @wakeup_record = WakeupRecord.new(params[:wakeup_record])
 	@wakeup_record.user = @current_user
-	@wakeup_record.time = DateTime.civil(
-		DateTime.now.year,
-		DateTime.now.month,
-		DateTime.now.day,
+	@wakeup_record.timezone = current_timezone
+	
+	
+	utc = DateTime.now.new_offset(0)
+    tz = ActiveSupport::TimeZone.new current_timezone
+	local = tz.utc_to_local utc
+	
+	@wakeup_record.time = tz.local(
+		local.year,
+		local.month,
+		local.day,
 		@wakeup_record.time.hour,
 		@wakeup_record.time.min)
 

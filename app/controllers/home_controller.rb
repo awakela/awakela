@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-      @wakeup_record = WakeupRecord.new
+      @my_wakeup_record = WakeupRecord.create current_timezone
 	  @wakeup_records = WakeupRecord.all
 
 		respond_to do |format|

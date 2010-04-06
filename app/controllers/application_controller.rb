@@ -34,6 +34,25 @@ protected
 	end
 	@current_user
   end
+  
+  def current_user
+	@current_user
+  end
+  
+  def current_timezone
+	client_timezone or server_timezone
+  end
+  
+  def server_timezone
+	(defined? config) and config.time_zone or 'UTC'
+  end
 
+  def client_timezone
+	cookies[:timezone]
+  end
   helper_method :logged_in?
+  helper_method :current_user
+  helper_method :current_timezone
+  helper_method :client_timezone
+  helper_method :server_timezone
 end

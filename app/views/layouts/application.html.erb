@@ -6,27 +6,25 @@
     <meta name="robots" content="index, follow" />
     <title>awake.la</title>
     <%= stylesheet_link_tag 'base' %>
+	<!-- <%= javascript_include_tag :defaults%> -->
+	<%= javascript_include_tag 'awakela.base'%>
+	<%= yield(:head) -%>
   </head>
   <body>
     <div id="wrapper">
       <div id="header">
-		<h1>Awake.La</h1>
+		<a href="/"><h1>Awake.La</h1></a>
 		<% if flash[:notice] %>
 			<p style="color: green"><%= flash[:notice] %></p>
 		<% end -%>
-		<% if logged_in? %>
-			<div class="user-status">
-				你好，<%= @current_user.username %>。
-			</div>
-		<% else %>
-			<%= render :partial => "shared/login" %>
-		<% end -%>
+		<%= yield(:header) -%>
       </div>
       <div id="main">
         <%= yield %>
       </div>
       <div id="footer">
 		<% if logged_in? %>
+			<%= render :partial => 'sessions/timezone_select' -%>
 			<a href="/sessions/destroy">退出</a>
 		<% end -%>
       </div>

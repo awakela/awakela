@@ -43,10 +43,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
-  if @user.save
-	flash[:notice] = 'User was successfully created.'
-	sign_in(@user)
-  else
+	if @user.save
+		flash[:notice] = 'User was successfully created.'
+		sign_in(@user)
+	else
   
   end
   redirect_to :root

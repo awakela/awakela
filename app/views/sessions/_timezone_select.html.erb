@@ -1,0 +1,38 @@
+<%
+	if @_session_timezone_select_rendered
+		raise Exception, 'timezone_select control already rendered in this request'
+	end
+	@_session_timezone_select_rendered = true
+%>
+<script type="text/javascript">
+	function onTimeZoneSelectChanged(){
+		if(document.cookie.timezone != this.value){
+			document.cookie = "timezone=" + this.value + "; path=/";
+			window.location = window.location.href; // reload, but forgot all form inputs (different with location.reload())
+		}
+	}
+	function setTimeZoneAutomatically(){
+		var s = document.getElementById('session_timezone');
+		var timezone = getClientTimeZone();
+		for (i = 0; i < s.options.length; i++) {
+			if (s.options[i].text.indexOf( timezone ) > -1) {
+				s.selectedIndex = i; // this won't trigger change event on select, so we need to manually trigger it
+				onTimeZoneSelectChanged.apply(s);
+				break;
+			}
+		}
+	}
+	onload = function(){
+		document.getElementById('session_timezone').onchange = onTimeZoneSelectChanged;
+		<% if client_timezone.nil? %>
+		setTimeZoneAutomatically();
+		<% end %>
+	}
+</script>
+<noscript>
+	javascript needs to be turned on to use this functionality
+</noscript>
+<%
+# todo: implement change client timezone without javascript in client (p2)
+%>
+您的时区： <%= time_zone_select :session, :timezone, nil, :default => current_timezone %>

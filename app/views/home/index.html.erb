@@ -1,8 +1,17 @@
-﻿<% if logged_in? %>
-	<% if !@current_user.todays_record.nil? %>
-		今天起床时间：<%= @current_user.todays_record.time %>
+﻿<%- content_for(:header) do -%>
+	<% if logged_in? %>
+		<div class="user-status">
+			你好，<%= current_user.username %>。
+		</div>
 	<% else %>
-		<%= render :partial => "wakeup_records/wakeup_post_form" %>
+		<%= render :partial => "shared/login" %>
+	<% end -%>
+<%- end -%>
+<% if logged_in? %>
+	<% if !current_user.todays_record.nil? %>
+		今天起床时间：<%= current_user.todays_record.time_local.strftime '%Y-%m-%d %H:%M:%S' %>
+	<% else %>
+		<%= render :partial => "wakeup_records/wakeup_post_form", :locals => { :new_record => @my_wakeup_record } %>
 	<% end -%>
 <% end -%>
 <%= render :partial => "wakeup_records/list" %>
