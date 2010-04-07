@@ -32,8 +32,9 @@ class WakeupRecord < ActiveRecord::Base
   end
   
   def recorded_today?
-		now = UserSession.current.tz.now
-    self.time > self.tz.local(now.year,now.month,now.day)
+		user_tz = UserSession.current.tz
+		now = user_tz.now
+    self.time > user_tz.local(now.year,now.month,now.day)
   end
   
 end
