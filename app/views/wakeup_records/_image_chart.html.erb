@@ -1,4 +1,7 @@
-<% if wakeup_records.size
+<% if wakeup_records.nil? or wakeup_records.empty? %>
+没图
+<% else
+
 
 require 'gchart'
 

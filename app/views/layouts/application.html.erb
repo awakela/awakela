@@ -13,20 +13,19 @@
   <body>
     <div id="wrapper">
       <div id="header">
-		<a href="/"><h1>Awake.La</h1></a>
-		<% if flash[:notice] %>
-			<p style="color: green"><%= flash[:notice] %></p>
-		<% end -%>
-		<%= yield(:header) -%>
-      </div>
-      <div id="main">
-        <%= yield %>
-      </div>
-      <div id="footer">
-		<% if logged_in? %>
-			<%= render :partial => 'sessions/timezone_select' -%>
-			<a href="/sessions/destroy">退出</a>
-		<% end -%>
+				<a href="/"><h1>Awake.La</h1></a>
+				<% if flash[:notice] %>
+					<p style="color: green"><%= flash[:notice] %></p>
+				<% end -%>
+				<%= yield(:header) -%>
+			</div>
+			<div id="main">
+				<%= yield %>
+			</div>
+			<div id="footer">
+				<% if logged_in? %>
+					<a href="/users/me">编辑</a> <a href="/sessions/destroy">退出</a>
+				<% end -%>
       </div>
   </body>
 </html>

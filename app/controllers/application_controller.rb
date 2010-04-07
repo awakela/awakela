@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_user_session
   helper :all # include all helpers, all the time
 	
+	SERVER_TIMEZONE = 'Beijing' # please also update the config/environment.rb
+	
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery 
 
@@ -35,17 +37,13 @@ protected
 		@current_user
   end
 	
-  def current_user_session
-		UserSession.current
-  end
   
   helper_method :logged_in?
   helper_method :current_user
-  helper_method :current_user_session
 private
 	
 	def set_current_user_session
 		@current_user = User.find_by_id(session[:user_id]) if session[:user_id]
-		UserSession.create(@current_user, cookies[:timezone])
+		Time.zone = @current_user.timezone if @current_user
 	end
 end

@@ -1,24 +1,48 @@
+<%- content_for(:header) do -%>
+	<%= render :partial => "sessions/current" %>
+<%- end -%>
 <h1>Editing user</h1>
-
+<script type="text/javascript">
+	function setTimeZoneAutomatically(){
+		var s = document.getElementById('user_timezone');
+		var timezone = getClientTimeZone();
+		for (i = 0; i < s.options.length; i++) {
+			if (s.options[i].text.indexOf( timezone ) > -1) {
+				s.selectedIndex = i;
+				break;
+			}
+		}
+	}
+	onload = function(){
+		<% if current_user.timezone.nil? or current_user.timezone.empty? %>
+		setTimeZoneAutomatically();
+		<% end %>
+	};
+</script>
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
 
   <p>
     <%= f.label :username %><br />
-    <%= f.text_field :username %>
+    <%=h @user.username %>
   </p>
   <p>
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%=h @user.email %>
   </p>
   <p>
     <%= f.label :password %><br />
-    <%= f.text_field :password %>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <label for="password_repeat" >Repeat your password</label><br />
+    <input name="user[password_repeat]" id="password_repeat" type="password" size="30" />
+  </p>
+  <p>
+    <%= f.label :timezone %><br />
+    <%= f.time_zone_select :timezone %>
   </p>
   <p>
     <%= f.submit 'Update' %>
   </p>
 <% end %>
-
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>

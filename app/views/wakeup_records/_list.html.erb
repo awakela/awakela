@@ -1,27 +1,26 @@
-﻿
-<table>
+﻿<table>
   <tr>
-	<% if not defined? show_user or show_user %>
-    <th>谁</th>
-	<% end %>
-    <th>时间</th>
+		<% if not defined? show_user or show_user %>
+			<th>谁</th>
+		<% end %>
+    <th>起床时间</th>
     <th>留言</th>
-    <th>时区</th>
+    <th>时间</th>
   </tr>
 
 <% wakeup_records.each do |wakeup_record|%>
   <tr>
-	<% if not defined? show_user or show_user %>
-    <td><%=link_to wakeup_record.user, user_path(wakeup_record.user.username) %></td>
-	<% end %>
-    <td><%=h wakeup_record.time_local.strftime '%Y-%m-%d %H:%M:%S' %></td>
+		<% if not defined? show_user or show_user %>
+			<td><%=link_to wakeup_record.user, user_path(wakeup_record.user.username) %></td>
+		<% end %>
+    <td>
+			<%=h nicky_time_a wakeup_record.time_local %>
+			<%if Time.zone.name != wakeup_record.timezone%>
+			(<%=h wakeup_record.timezone %>)
+			<%end%>
+		</td>
     <td><%=h wakeup_record.message %></td>
-    <td><%=h wakeup_record.timezone %></td>
-	<!--
-    <td><%= link_to 'Show', wakeup_record %></td>
-    <td><%= link_to 'Edit', edit_wakeup_record_path(wakeup_record) %></td>
-    <td><%= link_to 'Destroy', wakeup_record, :confirm => 'Are you sure?', :method => :delete %></td>
-	-->
+    <td><%=h nicky_time_r wakeup_record.time %></td>
   </tr>
 <% end %>
 </table>

@@ -1,11 +1,9 @@
 class WakeupRecord < ActiveRecord::Base
   belongs_to :user
-  def self.create(timezone_str)  
+  def self.create
     result = WakeupRecord.new
-		utc = DateTime.now.new_offset(0)
-    tz = ActiveSupport::TimeZone.new timezone_str
-		result.timezone = timezone_str
-		result.time = tz.utc_to_local utc
+		result.time = DateTime.now.in_time_zone
+		result.timezone = Time.zone.name
 		result
   end
   
@@ -17,24 +15,14 @@ class WakeupRecord < ActiveRecord::Base
 			nil
 		end
   end
-
-  def tz
-		tz_str = self.timezone
-		if tz_str.nil? or tz_str.empty?
-			tz_str = 'UTC'
-		end
-
-		ActiveSupport::TimeZone.new tz_str
-  end
   
   def time_local
-		self.tz.utc_to_local self.time
+		self.time.in_time_zone self.timezone
   end
   
   def recorded_today?
-		user_tz = UserSession.current.tz
-		now = user_tz.now
-    self.time > user_tz.local(now.year,now.month,now.day)
+		now = Time.zone.now
+    self.time > Time.zone.local(now.year,now.month,now.day)
   end
   
 end

@@ -1,0 +1,7 @@
+<% if logged_in? %>
+	<div class="user-status">
+		你好，<%= current_user.username %>。<%= avatar_tag(current_user, :size => 40) %>
+	</div>
+<% else %>
+	<%= render :partial => "sessions/login" %>
+<% end -%>

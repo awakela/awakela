@@ -1,17 +1,11 @@
 ﻿<%- content_for(:header) do -%>
-	<% if logged_in? %>
-		<div class="user-status">
-			你好，<%= current_user.username %>。<%= avatar_tag(current_user, :size => 40) %>
-		</div>
-	<% else %>
-		<%= render :partial => "shared/login" %>
-	<% end -%>
+	<%= render :partial => "sessions/current" %>
 <%- end -%>
 <% if logged_in? %>
 	<% if not current_user.todays_wakeup_record.nil? %>
-		今天起床时间：<%= current_user.todays_wakeup_record.time_local.strftime '%Y-%m-%d %H:%M:%S' %>
+		今天起床时间：<%=h nicky_time_a current_user.todays_wakeup_record.time_local %>
 	<% else %>
-		<%= render :partial => "wakeup_records/wakeup_post_form", :locals => { :new_record => @my_wakeup_record } %>
+		<%= render :partial => "wakeup_records/post", :locals => { :new_record => @my_wakeup_record } %>
 	<% end -%>
 <% end -%>
 <h2>大家的起床记录</h2>

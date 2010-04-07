@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+	map.connect '/users/me', :controller => 'users', :action => 'edit'
   map.resources :wakeup_records
 
   map.resources :users

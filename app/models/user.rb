@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :wakeup_records
 
   validates_presence_of :username, :email, :password
-  validates_uniqueness_of :username, :email
+  validates_uniqueness_of :username, :email, :if => Proc.new { |record| record.new_record? }
 
   def self.authenticate(login, password)
     user = self.find_by_username_and_password(login, password) 
@@ -20,4 +20,5 @@ class User < ActiveRecord::Base
   def to_s
     self.username
   end
+	
 end
