@@ -2,6 +2,7 @@ module DateTimeHelper
 	# nicky time - absolute
 	# like "4 o'clock", "4点一刻"
 	def nicky_time_a(time)
+		return '' if time.nil
 		if time.is_a?(::Float) or time.is_a?(::Fixnum)
 			time = 23.99 if time == 24
 			time = Time.mktime(Time.now.year, Time.now.month, Time.now.day, time.to_int, ((0.0 + time - time.to_int) * 60).to_int, 0, 0)
