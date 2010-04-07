@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  before_filter :fetch_logged_in_user
+  before_filter :set_current_user_session
   helper :all # include all helpers, all the time
 	
   # See ActionController::RequestForgeryProtection for details
@@ -12,10 +12,6 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
 protected
-  def fetch_logged_in_user
-    return unless session[:user_id]
-    @current_user = User.find_by_id(session[:user_id])
-  end
   
   def logged_in?
     ! @current_user.nil?
@@ -36,23 +32,20 @@ protected
   end
   
   def current_user
-	@current_user
+		@current_user
+  end
+	
+  def current_user_session
+		UserSession.current
   end
   
-  def current_timezone
-	client_timezone or server_timezone
-  end
-  
-  def server_timezone
-	(defined? config) and config.time_zone or 'UTC'
-  end
-
-  def client_timezone
-	cookies[:timezone]
-  end
   helper_method :logged_in?
   helper_method :current_user
-  helper_method :current_timezone
-  helper_method :client_timezone
-  helper_method :server_timezone
+  helper_method :current_user_session
+private
+	
+	def set_current_user_session
+		@current_user = User.find_by_id(session[:user_id]) if session[:user_id]
+		UserSession.create(@current_user, cookies[:timezone])
+	end
 end

@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-		@my_wakeup_record = WakeupRecord.create current_timezone
+		@my_wakeup_record = WakeupRecord.create current_user_session.timezone
 		@wakeup_records = WakeupRecord.find(
 			:all,
 			:order => "id desc",

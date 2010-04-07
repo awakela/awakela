@@ -44,12 +44,12 @@ class WakeupRecordsController < ApplicationController
   def create
     @wakeup_record = WakeupRecord.new(params[:wakeup_record])
 	@wakeup_record.user = @current_user
-	@wakeup_record.timezone = current_timezone
+	@wakeup_record.timezone = current_user_session.timezone
 	
 	
 	utc = DateTime.now.new_offset(0)
-    tz = ActiveSupport::TimeZone.new current_timezone
-	local = tz.utc_to_local utc
+  tz = current_user_session.tz
+	local = current_user_session.tz.utc_to_local utc
 	
 	@wakeup_record.time = tz.local(
 		local.year,

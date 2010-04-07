@@ -24,7 +24,7 @@
 	}
 	onload = function(){
 		document.getElementById('session_timezone').onchange = onTimeZoneSelectChanged;
-		<% if client_timezone.nil? %>
+		<% if current_user_session.client_timezone.nil? %>
 		setTimeZoneAutomatically();
 		<% end %>
 	}
@@ -35,4 +35,4 @@
 <%
 # todo: implement change client timezone without javascript in client (p2)
 %>
-您的时区： <%= time_zone_select :session, :timezone, nil, :default => current_timezone %>
+您的时区： <%= time_zone_select :session, :timezone, nil, :default => current_user_session.timezone %>
